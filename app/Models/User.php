@@ -46,4 +46,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function getFullNameAttribute()
+    {
+        return 'Andrew Peroramas';
+    }
+
+    public function getFirstNameAttribute()
+    {
+        return 'Andrew';
+    }
+
+    public function getLastNameAttribute()
+    {
+        return 'Peroramas';
+    }
 }

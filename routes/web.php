@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::post('verify-buyer', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
     $user->assignRole('buyer');
     Auth::login($user);
@@ -41,7 +41,7 @@ Route::post('verify-buyer', function () {
 Route::post('verify-seller', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
     $user->assignRole('seller');
     Auth::login($user);
@@ -52,7 +52,7 @@ auth()->user()->notify(new VerifyEmail());
 Route::post('verify-breeder', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
     $user->assignRole('breeder');
     Auth::login($user);
@@ -64,84 +64,84 @@ Route::post('admin-contact', function () {
     $payload = [
         'first_name' => 'Sasha',
         'last_name' => 'Iyamu',
-        'email' => 'businessguy1982@yahoo.com',
+        'email' => env('SEND_MAIL_TO'),
         'account_type' => 'Breeder',
         'subject' => 'I need help',
         'message' => 'lorem ipsum dolor sit amet  lorem ipsum dolor sit amet  lorem ipsum dolor sit amet  ',
     ];
 
-    Mail::queue((new AdminNewContact($payload))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new AdminNewContact($payload))->to(env('SEND_MAIL_TO')));
 })->name('admin-contact');
 
 Route::post('breeder-account-approved', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new BreederAccountApproved($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new BreederAccountApproved($user))->to(env('SEND_MAIL_TO')));
 })->name('breeder-account-approved');
 
 Route::post('breeder-account-rejected', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
     $reason = 'Bad images';
-    Mail::queue((new BreederAccountRejected($user, $reason))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new BreederAccountRejected($user, $reason))->to(env('SEND_MAIL_TO')));
 })->name('breeder-account-rejected');
 
 // Route for sending free account email
 Route::post('free-account-mail', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new FreeAccountMail($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new FreeAccountMail($user))->to(env('SEND_MAIL_TO')));
 })->name('free-account-mail');
 
 Route::post('new-breeder-special-account-mail', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new NewBreederSpecialAccountMail($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new NewBreederSpecialAccountMail($user))->to(env('SEND_MAIL_TO')));
 })->name('new-breeder-special-account-mail');
 
 Route::post('premium-account-mail', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new PremiumAccountMail($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new PremiumAccountMail($user))->to(env('SEND_MAIL_TO')));
 })->name('premium-account-mail');
 
 Route::post('renew-breeder-mail', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new RenewBreederMail($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new RenewBreederMail($user))->to(env('SEND_MAIL_TO')));
 })->name('renew-breeder-mail');
 
 Route::post('renew-seller-mail', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new RenewSellerMail($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new RenewSellerMail($user))->to(env('SEND_MAIL_TO')));
 })->name('renew-seller-mail');
 
 Route::post('subscription-ended', function () {
     User::query()->delete();
     $user = User::factory()->create([
-        'email' => 'wolfandrew307@gmail.com'
+        'email' => env('SEND_MAIL_TO')
     ]);
-    Mail::queue((new SubscriptionEnded($user))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new SubscriptionEnded($user))->to(env('SEND_MAIL_TO')));
 })->name('subscription-ended');
 
 Route::post('support-team-email-response', function () {
     $response = 'lorem ipsum dolor sit amet';
-    Mail::queue((new SupportTeamEmailResponseMail('Danny Lim', 'businessguy1982@yahoo.com', $response))->to('businessguy1982@yahoo.com'));
+    Mail::queue((new SupportTeamEmailResponseMail('Danny Lim', env('SEND_MAIL_TO'), $response))->to(env('SEND_MAIL_TO')));
 })->name('support-team-email-response');
 
 
